@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AFRUZ // Zhohirul Premium Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+        body { 
+            font-family: 'Space Grotesk', sans-serif;
+            background: #0b0f19;
+        }
+        /* Custom Scrollbar biar makin estetik */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0b0f19; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
+    </style>
+</head>
+<body class="text-slate-200 antialiased min-h-screen flex flex-col">
+
+    <nav class="bg-[#0b0f19]/70 backdrop-blur-xl sticky top-0 z-50 border-b border-slate-800/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center gap-2">
+                    <div class="w-10 h-10 bg-gradient-to-tr from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-cyan-500/20 overflow-hidden">
+                        <img src="Zhohirul Premium store.jpg" alt="Logo" class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-2xl font-bold tracking-tight text-white">Zhohirul Premium Store<span class="text-cyan-400"></span></span>
+                </div>
+
+                <div class="hidden md:flex space-x-8 font-medium items-center text-slate-400">
+                    <a href="#" onclick="filterCategory('All')" class="text-cyan-400 transition">Katalog</a>
+                    <a href="#" onclick="filterCategory('All')" class="hover:text-white transition">Produk Terbaru</a>
+                    
+                    <div class="relative group">
+                        <button class="hover:text-white transition flex items-center gap-1 focus:outline-none">
+                            Bantuan <i class="fa-solid fa-chevron-down text-[10px] pt-0.5 transition-transform group-hover:rotate-180"></i>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-48 bg-slate-900 border border-slate-800 rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-1.5">
+                            <a href="https://wa.me/6282318671149?text=Halo%20Admin%2C%20saya%20butuh%20bantuan%20terkait%20layanan%20Zhohirul%20Premium%20Store." target="_blank" class="flex items-center gap-2 px-3 py-2 text-xs rounded-lg text-slate-300 hover:bg-emerald-600/10 hover:text-emerald-400 transition">
+                                <i class="fa-brands fa-whatsapp text-sm"></i> Chat WhatsApp
+                            </a>
+                            <a href="mailto:zhohirulpremiumstore@gmail.com?subject=Tanya%20Bantuan%20-%20Zhohirul%20Premium%20Store" class="flex items-center gap-2 px-3 py-2 text-xs rounded-lg text-slate-300 hover:bg-cyan-600/10 hover:text-cyan-400 transition">
+                                <i class="fa-solid fa-envelope text-sm"></i> Hubungi via Email
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 grid lg:grid-cols-4 gap-8">
+        
+        <aside class="lg:col-span-1 space-y-6">
+            <div class="bg-slate-900/40 border border-slate-800/80 rounded-2xl p-6 backdrop-blur-md sticky top-28">
+                <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-sliders text-cyan-400 text-sm"></i> Filter Aplikasi
+                </h3>
+                <div class="space-y-2" id="category-filters">
+                </div>
+                
+                <div class="mt-8 pt-6 border-t border-slate-800/60">
+                    <div class="bg-gradient-to-br from-slate-900 to-slate-950 p-4 rounded-xl border border-slate-800">
+                        <span class="text-xs text-slate-500 block mb-1">Butuh Bantuan / Custom Order?</span>
+                        <a href="https://wa.me/6282318671149" target="_blank" class="text-sm font-medium text-cyan-400 hover:underline flex items-center gap-1">
+                            Hubungi Admin WA <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <section class="lg:col-span-3 space-y-8">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-900/20 p-6 rounded-2xl border border-slate-800/40">
+                <div>
+                    <h1 class="text-2xl font-bold text-white tracking-tight">Katalog Akun Premium</h1>
+                    <p class="text-slate-400 text-sm">Akses instan, legal, bergaransi, dan harga paling bersahabat, welll pkoknyaa</p>
+                </div>
+                <div class="text-xs text-slate-500 bg-slate-900 px-3 py-2 rounded-lg border border-slate-800" id="product-counter">
+                    Menampilkan 0 Produk
+                </div>
+            </div>
+
+            <div id="product-grid" class="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
+            </div>
+        </section>
+    </main>
+
+    <div id="order-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-2xl p-6 relative shadow-2xl overflow-y-auto max-h-[90vh]">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white transition">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <div id="step-form">
+                <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-shopping-cart text-cyan-400"></i> Detail Pembelian
+                </h3>
+                <hr class="border-slate-800 mb-4">
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Item Yang Dipilih</label>
+                        <input type="text" id="modal-product-name" readonly class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none font-medium">
+                    </div>
+
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-left">
+                        <div class="text-xs text-slate-400 font-bold uppercase tracking-wider mb-1.5 flex items-center gap-1">
+                            <i class="fa-solid fa-circle-info text-cyan-400 text-[11px]"></i> Deskripsi Layanan
+                        </div>
+                        <div class="text-xs text-slate-300 font-medium leading-relaxed" id="modal-product-description">
+                            -
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Harga Satuan</label>
+                            <input type="text" id="modal-product-price-label" readonly class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-cyan-400 text-sm focus:outline-none font-bold">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Mau Berapa Pcs?</label>
+                            <input type="number" id="modal-qty" value="1" min="1" oninput="calculateTotal()" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-cyan-500 font-bold">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">No. WhatsApp Yang Bisa Dihubungi <span class="text-red-500">*Wajib</span></label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-500 text-sm font-medium">+62</span>
+                            <input type="tel" id="modal-phone" placeholder="8XXXXXXXXX" class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-14 pr-4 py-3 text-white text-sm focus:outline-none focus:border-cyan-500 font-medium" required>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800/60 mt-2">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-xs text-slate-400">Total Harga + Biaya QRIS (+Rp500) :</span>
+                        </div>
+                        <div class="text-xl font-bold text-white" id="modal-total-price">Rp 0</div>
+                    </div>
+
+                    <button onclick="submitToPayment()" class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold py-3.5 px-4 rounded-xl text-sm hover:opacity-90 transition tracking-wider uppercase mt-4">
+                        Lanjut Pembayaran
+                    </button>
+                </div>
+            </div>
+
+            <div id="step-payment" class="hidden text-center space-y-4">
+                <h3 class="text-xl font-bold text-white flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-qrcode text-cyan-400"></i> Pembayaran QRIS
+                </h3>
+                <hr class="border-slate-800 my-2">
+
+                <p class="text-xs text-slate-400 px-2">Silakan scan kode QRIS di bawah ini melalui aplikasi E-Wallet atau M-Banking favoritmu.</p>
+                
+                <div class="bg-white p-4 rounded-2xl inline-block shadow-xl mx-auto my-2 border border-slate-200">
+                    <img src="qris afruz.jpeg" id="qris-image" alt="QRIS Code" class="w-56 h-56 mx-auto object-contain">
+                </div>
+
+                <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-left">
+                    <div class="text-xs text-slate-500 uppercase tracking-widest font-bold mb-1">Total Tagihan</div>
+                    <div class="text-2xl font-bold text-cyan-400" id="payment-total">Rp 0</div>
+                    <div class="text-[11px] text-slate-400 mt-2 border-t border-slate-900 pt-2">
+                        <i class="fa-solid fa-circle-info text-cyan-500 mr-1"></i> Harap transfer sesuai nominal di atas (Sudah termasuk Rp500).
+                    </div>
+                </div>
+
+                <div class="space-y-2 pt-2">
+                    <a id="wa-confirm-btn" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-4 rounded-xl text-xs transition flex items-center justify-center gap-2 tracking-wider uppercase">
+                        <i class="fa-brands fa-whatsapp text-lg"></i> Konfirmasi Pembayaran via WA
+                    </a>
+                    <button onclick="closeModal()" class="w-full bg-slate-950 border border-slate-800 text-slate-400 hover:text-white font-semibold py-2.5 px-4 rounded-xl text-xs transition tracking-wider uppercase">
+                        Selesai / Tutup
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="bg-slate-950 border-t border-slate-900 py-8 mt-20 text-center text-xs text-slate-600 tracking-wider uppercase">
+        &copy; 2026 Zhohirul Premium Store. ALL RIGHTS RESERVED.
+    </footer>
+
+    <script>
+        // DATABASE PRODUK - DENGAN DESKRIPSI UNTUK TIAP ITEM
+        const products = [
+            { id: 1, category: "Capcut", name: "Capcut Pro Private 1 Bulan", price: 35000, image: "capcut.jpg", description: "Akun private milik sendiri, bebas login di device pribadi, eksklusif tanpa gangguan pengguna lain." },
+            { id: 2, category: "Capcut", name: "Capcut Pro Private 1 Tahun Full Garansi", price: 180000, image: "capcut.jpg", description: "Durasi panjang 1 tahun penuh, akun private aman terkendali, and dicover garansi penuh anti-back." },
+            { id: 3, category: "Capcut", name: "Capcut Pro Shared Device 1 Bulan", price: 20000, image: "capcut.jpg", description: "Sistem sharing device legal, harga super hemat untuk akses semua fitur premium Capcut." },
+            { id: 6, category: "Gemini Ai", name: "Gemini Advanced Google AI 1 Bulan", price: 45000, image: "logo gemini.png", description: "Akses kecerdasan buatan Google model Ultra paling canggih, lancar jaya untuk analisis data & text." },
+            
+            // === ITEM GEMINI AI PRO ===
+            { id: 26, category: "Gemini Ai", name: "Gemini AI Pro 1 Bulan", price: 45000, image: "logo gemini.png", description: "Gemini AI Pro 1 Bulan - Support All Device. Tanyakan stok terlebih dahulu sebelum order. No rush." },
+            { id: 27, category: "Gemini Ai", name: "Gemini AI Pro 3 Bulan", price: 75000, image: "logo gemini.png", description: "Gemini AI Pro 3 Bulan - Support All Device. Tanyakan stok terlebih dahulu sebelum order. No rush." },
+            { id: 28, category: "Gemini Ai", name: "Gemini AI Pro 4 Bulan", price: 90000, image: "logo gemini.png", description: "Gemini AI Pro 4 Bulan - Support All Device. Tanyakan stok terlebih dahulu sebelum order. No rush." },
+            { id: 29, category: "Gemini Ai", name: "Gemini AI Pro 1 Tahun", price: 150000, image: "logo gemini.png", description: "Gemini AI Pro 1 Tahun (Paket Hemat Setaun) - Support All Device. Tanyakan stok terlebih dahulu sebelum order. No rush." },
+
+            // === GRUP ITEM CANVA ===
+            { id: 7, category: "Canva", name: "Canva Pro Premium 1 Bulan", price: 20000, image: "canva.jpg", description: "Akses jutaan template premium, hapus background sekali klik, masa aktif 1 month." },
+            { id: 8, category: "Canva", name: "Canva Pro Premium 2 Bulan", price: 35000, image: "canva.jpg", description: "Bikin desain makin lancar tanpa batas elemen pro, aktif full untuk 2 bulan ke depan." },
+            { id: 9, category: "Canva", name: "Canva Pro Premium 3 Bulan", price: 50000, image: "canva.jpg", description: "Paket kuartal hemat, unlock fitur brand kit dan penyimpanan cloud premium Canva selama 3 bulan." },
+            { id: 10, category: "Canva", name: "Canva Pro Premium 5 Bulan", price: 70000, image: "canva.jpg", description: "Cocok untuk desainer/konten kreator aktif, durasi ideal 5 bulan tanpa repot sering perpanjang." },
+            { id: 11, category: "Canva", name: "Canva Pro Premium 6 Bulan", price: 89000, image: "canva.jpg", description: "Akses setengah tahun penuh untuk semua aset elemen, font, grafis, dan video premium Canva." },
+            { id: 12, category: "Canva", name: "Canva Pro Premium 1 Tahun", price: 135000, image: "canva.jpg", description: "Satu tahun penuh tanpa pusing, investasi terbaik untuk kelancaran tugas kuliah maupun bisnis online." },
+            { id: 13, category: "Canva", name: "Canva Pro Premium Permanent", price: 170000, image: "canva.jpg", description: "Masa aktif permanen jangka panjang dengan harga sekali bayar, benefit terlengkap." },
+
+            // === GRUP ITEM NETFLIX ===
+            { id: 14, category: "Netflix", name: "Netflix Premium UltraHD 1 Bulan", price: 70000, image: "netflix.png", description: "Streaming film & series favorit resolusi tajam 4K Ultra HD, kualitas audio premium, durasi 1 bulan." },
+            { id: 15, category: "Netflix", name: "Netflix Premium UltraHD 2 Bulan", price: 89000, image: "netflix.png", description: "Tontonan lancar tanpa buffering resolusi tertinggi, legal dan aman dinikmati selama 2 bulan." },
+            { id: 16, category: "Netflix", name: "Netflix Premium UltraHD 3 Bulan", price: 110000, image: "netflix.png", description: "Paket liburan anti bosan 3 bulan, nonton puas drakor, anime, hollywood format HDR/Ultra HD." },
+            { id: 17, category: "Netflix", name: "Netflix Premium UltraHD 1 Tahun", price: 160000, image: "netflix.png", description: "Langganan marathon setahun penuh, profil aman, harga jauh lebih murah dibanding web resmi." },
+            { id: 18, category: "Netflix", name: "Netflix Premium UltraHD Permanent", price: 200000, image: "netflix.png", description: "Paket istimewa akses anti repot permanen bergaransi, bioskop pribadi dalam genggaman Anda." },
+
+            // === GRUP ITEM SPOTIFY ===
+            { id: 19, category: "Spotify", name: "Spotify Premium Individual 1 Bulan", price: 40000, image: "logo spotify.png", description: "1 BULAN FAMILY PLAN / INDPLAN RANDOM, GARANSI 20 HARI, WAJIB IKUTIN SNK YANG NANTI MUNCUL SETELAH ORDER. JANGAN GANTI EMAIL! GANTI EMAIL = NO GARANSI." },
+            { id: 20, category: "Spotify", name: "Spotify Premium Individual 2 Bulan", price: 70000, image: "logo spotify.png", description: "Download musik bebas offline saving, putar playlist favorit tanpa gangguan ads selama 2 bulan." },
+            { id: 21, category: "Spotify", name: "Spotify Premium Individual 3 Bulan", price: 95000, image: "logo spotify.png", description: "Nikmati podcast dan lagu kesayangan kualitas tinggi 320kbps full 3 bulan bebas interupsi." },
+            { id: 22, category: "Spotify", name: "Spotify Premium Individual 4 Bulan", price: 110000, image: "logo spotify.png", description: "Dengarkan jutaan lagu di mana saja kapan saja secara offline, aktif stabil selama 4 bulan." },
+            { id: 23, category: "Spotify", name: "Spotify Premium Individual 5 Bulan", price: 139000, image: "logo spotify.png", description: "Paket langganan personal durasi panjang 5 bulan dengan efisiensi harga paling mantap." },
+            { id: 24, category: "Spotify", name: "Spotify Premium Individual 6 Bulan", price: 150000, image: "logo spotify.png", description: "Setengah tahun bebas iklan, bikin harimu penuh musik tanpa hambatan kuota putar harian." },
+            { id: 25, category: "Spotify", name: "Spotify Premium Individual Permanent", price: 189000, image: "logo spotify.png", description: "Solusi abadi dengerin musik favorit tanpa pusing mikirin billing bulanan lagi. Permanen jos!" }
+        ];
+
+        let activeCategory = "All";
+        let selectedProduct = null;
+        let finalTotalPayable = 0;
+
+        // Ambil list kategori unik untuk filter sidebar
+        function initFilters() {
+            const container = document.getElementById('category-filters');
+            const categories = ["All", ...new Set(products.map(p => p.category))];
+            
+            container.innerHTML = categories.map(cat => `
+                <button onclick="filterCategory('${cat}')" id="btn-cat-${cat}" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium transition flex justify-between items-center ${cat === 'All' ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20' : 'text-slate-400 hover:bg-slate-900 hover:text-white'}">
+                    <span>${cat === 'All' ? 'Semua Aplikasi' : cat}</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] opacity-50"></i>
+                </button>
+             `).join('');
+        }
+
+        // Jalankan Filter Kategori
+        function filterCategory(category) {
+            activeCategory = category;
+            
+            const buttons = document.querySelectorAll('#category-filters button');
+            buttons.forEach(btn => {
+                btn.className = "w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium transition flex justify-between items-center text-slate-400 hover:bg-slate-900 hover:text-white";
+            });
+            
+            const activeBtn = document.getElementById(`btn-cat-${category}`);
+            if(activeBtn) {
+                activeBtn.className = "w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium transition flex justify-between items-center bg-cyan-500/10 text-cyan-400 border border-cyan-500/20";
+            }
+
+            renderProducts();
+        }
+
+        // Render Produk ke Grid
+        function renderProducts() {
+            const grid = document.getElementById('product-grid');
+            const filtered = activeCategory === "All" ? products : products.filter(p => p.category === activeCategory);
+            
+            document.getElementById('product-counter').innerText = `Menampilkan ${filtered.length} Produk`;
+
+            grid.innerHTML = filtered.map(product => `
+                <div class="bg-slate-900/30 border border-slate-800 rounded-2xl overflow-hidden group hover:border-slate-700 transition-all duration-300 flex flex-col relative">
+                    <span class="absolute top-4 left-4 z-10 text-[10px] font-bold tracking-widest uppercase bg-slate-950/80 text-cyan-400 px-2.5 py-1 rounded-md border border-slate-800 backdrop-blur-sm">
+                        ${product.category}
+                    </span>
+                    <div class="aspect-[4/3] w-full bg-slate-950 overflow-hidden relative">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80 group-hover:opacity-100">
+                    </div>
+                    <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <h3 class="font-bold text-white text-base group-hover:text-cyan-400 transition tracking-tight line-clamp-1">${product.name}</h3>
+                            <p class="text-slate-400 text-sm font-medium mt-1">Rp ${product.price.toLocaleString('id-ID')}</p>
+                            
+                            <span class="inline-flex items-center gap-1.5 text-[11px] font-medium text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-md border border-emerald-500/20 mt-2.5">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Ready Stok
+                            </span>
+                        </div>
+                        <button onclick="openOrderModal(${product.id})" class="w-full bg-slate-950 border border-slate-800 hover:border-cyan-500 hover:text-cyan-400 text-slate-300 font-semibold py-3 px-4 rounded-xl text-xs transition duration-200 flex items-center justify-center gap-2 tracking-wider uppercase text-center">
+                            Beli Sekarang
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // FUNGSI MODAL DENGAN BOX DESKRIPSI LAYANAN OTOMATIS SESUAI PRODUK
+        function openOrderModal(productId) {
+            selectedProduct = products.find(p => p.id === productId);
+            if (!selectedProduct) return;
+
+            // Reset Form ke Tahap Pertama
+            document.getElementById('step-form').classList.remove('hidden');
+            document.getElementById('step-payment').classList.add('hidden');
+            
+            // Reset border input jika sebelumnya merah akibat validasi gagal
+            document.getElementById('modal-phone').classList.remove('border-red-500');
+            document.getElementById('modal-phone').classList.add('border-slate-800');
+            
+            // Isi data otomatis awal
+            document.getElementById('modal-product-name').value = selectedProduct.name;
+            document.getElementById('modal-product-price-label').value = `Rp ${selectedProduct.price.toLocaleString('id-ID')}`;
+            document.getElementById('modal-qty').value = 1;
+            document.getElementById('modal-phone').value = "";
+            
+            // Set deskripsi produk ke dalam modal
+            document.getElementById('modal-product-description').innerText = selectedProduct.description || 'Akses premium legal dan bergaransi.';
+
+            calculateTotal();
+
+            // Tampilkan Modal
+            document.getElementById('order-modal').classList.remove('hidden');
+        }
+
+        function calculateTotal() {
+            if (!selectedProduct) return;
+            const qty = parseInt(document.getElementById('modal-qty').value) || 1;
+            
+            // Hitung total dengan tambahan 500 perak
+            finalTotalPayable = (selectedProduct.price * qty) + 500;
+            
+            document.getElementById('modal-total-price').innerText = `Rp ${finalTotalPayable.toLocaleString('id-ID')}`;
+        }
+
+        function submitToPayment() {
+            const phoneField = document.getElementById('modal-phone');
+            const phoneInput = phoneField.value.trim();
+            const qty = document.getElementById('modal-qty').value;
+
+            // Validasi wajib isi No WA sesuai instruksi
+            if (!phoneInput) {
+                phoneField.classList.remove('border-slate-800');
+                phoneField.classList.add('border-red-500'); // Efek border merah penanda wajib isi
+                alert("Silakan masukkan Nomor WhatsApp kamu terlebih dahulu!");
+                phoneField.focus();
+                return; // Transaksi dihentikan total jika No WA kosong
+            } else {
+                phoneField.classList.remove('border-red-500');
+                phoneField.classList.add('border-slate-800');
+            }
+
+            // Ganti tampilan ke layout QRIS
+            document.getElementById('step-form').classList.add('hidden');
+            document.getElementById('step-payment').classList.remove('hidden');
+
+            document.getElementById('payment-total').innerText = `Rp ${finalTotalPayable.toLocaleString('id-ID')}`;
+
+            // Set link konfirmasi otomatis via WhatsApp Admin
+            const textWhatsApp = `Halo Admin, saya ingin konfirmasi pembayaran produk:\n\n` +
+                                 `• *Produk:* ${selectedProduct.name}\n` +
+                                 `• *Jumlah:* ${qty} Pcs\n` +
+                                 `• *No. WA Pembeli:* +62${phoneInput}\n` +
+                                 `• *Total Tagihan (+500):* Rp ${finalTotalPayable.toLocaleString('id-ID')}\n\n` +
+                                 `Berikut saya lampirkan bukti transfernya. Mohon segera diproses ya!`;
+            
+            document.getElementById('wa-confirm-btn').href = `https://wa.me/6282318671149?text=${encodeURIComponent(textWhatsApp)}`;
+        }
+
+        function closeModal() {
+            document.getElementById('order-modal').classList.add('hidden');
+            selectedProduct = null;
+        }
+
+        // Inisialisasi Aplikasi Saat Halaman Dibuka
+        initFilters();
+        renderProducts();
+    </script>
+</body>
+</html>
